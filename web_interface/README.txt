@@ -3,9 +3,9 @@ DEPLOY FRONT-END FOR TESTING
 +) deploy step:
 Step 1: Install XAMPP for window (Choose latest version). Link: https://www.apachefriends.org/download.html
 
-Step 2: Copy "web_interface" folder and bring it in C:\xampp\htdocs (based on what disk you install xampp)
+Step 2: Copy "front-end" folder and bring it in C:\xampp\htdocs (based on what disk you install xampp)
 
-Step 3: Access "http://localhost/web_interface/front-end/home.html?uid=123" in your browser and wait a second for page to load api. 
+Step 3: Access "http://localhost/front-end/home.html?uid=123" in your browser and wait a second for page to load api. 
         Note: uid=123 in this URL is the uid of MCU and it will be set as "123" for testing purpose. 
 - You can test other features such as change condition, view all data send from MCU by click button in home page.
 

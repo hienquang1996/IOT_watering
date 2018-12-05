@@ -1,2 +1,4 @@
 # IOT_watering
-This project includes two files 
+
+The web_interface folder contain html, php files for display user interface and GUIDE for deploy also.
+The server folder contain source code of server built by Nodejs and list of API can use without deploy in local machine.

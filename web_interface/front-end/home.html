@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Home</title>
+  <meta http-equiv="Refresh" content="300">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link href="resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet" />
+  <link href="resources/css/axure_rp_page.css" type="text/css" rel="stylesheet" />
+  <link href="data/styles.css" type="text/css" rel="stylesheet" />
+  <link href="files/home/styles.css" type="text/css" rel="stylesheet" />
+  <script src="resources/scripts/jquery-1.7.1.min.js"></script>
+  <script src="resources/scripts/jquery-ui-1.8.10.custom.min.js"></script>
+  <script src="resources/scripts/prototypePre.js"></script>
+  <script src="data/document.js"></script>
+  <script src="resources/scripts/prototypePost.js"></script>
+  <script src="files/home/data.js"></script>
+  <script type="text/javascript">
+    $axure.utils.getTransparentGifPath = function () { return 'resources/images/transparent.gif'; };
+    $axure.utils.getOtherPath = function () { return 'resources/Other.html'; };
+    $axure.utils.getReloadPath = function () { return 'resources/reload.html'; };
+  </script>
+  <script>
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get("uid");
+    function getServerTime() {
+      var request = new XMLHttpRequest();
+      var url = "./php/mcu_condition.php?mcu=" + myParam;
+      request.open("GET", url, true);
+      request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      request.onreadystatechange = function () {
+        if (request.readyState == 4 && request.status == 200) {
+          if (request.responseText == "\n") {
+            alert("mcu with this id isn't existed");
+          }
+
+          showTime(request.responseText);
+        }
+      }
+      request.send();
+    }
+
+    //dung de xu ly data 
+    function showTime(response) {
+
+      var data = JSON.parse(response);
+      document.getElementById("u15_input").value = data.temp_condition;
+      document.getElementById("u16_input").value = data.humi_condition;
+      document.getElementById("u19_input").value = data.mode.toUpperCase();
+      document.getElementById("u22_input").value = myParam;
+    }
+    window.onload = getServerTime();
+
+
+
+    // myButton.addEventListener('click', getServerTime, false)
+    // dung de lay data
+    function getServerTime2() {
+      // const urlParams = new URLSearchParams(window.location.search);
+      // const myParam = urlParams.get("uid");
+      var request = new XMLHttpRequest();
+      var url = "./php/mcu_latest_data.php?mcu=" + myParam;
+      request.open("GET", url, true);
+      request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      request.onreadystatechange = function () {
+        if (request.readyState == 4 && request.status == 200) {
+          if (request.responseText == "\n") {
+            // location.reload();
+          }
+          else {
+            showTime2(request.responseText);
+          }
+
+        }
+      }
+      request.send();
+    }
+    //dung de xu ly data 
+    function showTime2(response) {
+      var data = JSON.parse(response);
+      // alert(data.temporary);
+      // document.write(data.temp_condition);
+
+      document.getElementById("u17_input").value = data.temporary;
+      document.getElementById("u18_input").value = data.humidity;
+
+      setTimeout(function () {
+        getServerTime();
+        getServerTime2();
+      }, 100);
+
+
+    }
+    window.onload = getServerTime2();
+    function updateMode(a) {
+      // alert("AAAA");
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          // Typical action to be performed when the document is ready:
+          var response = xhttp.responseText;
+          console.log("ok" + response);
+        }
+      };
+      xhttp.open("GET", "http://iot-assignment.herokuapp.com/updatemcu/" + myParam + "?mode=" + a, false);
+      xhttp.send();
+    }
+    function changeCondition() {
+      window.location.href = "changeCondition.html?uid=" + myParam;
+
+    }
+    function view(){
+      window.location.href = "view_logs.html?uid=" + myParam;
+    }
+
+    // alert(window.location);
+  </script>
+
+  <!-- <script>alert()</script> -->
+</head>
+
+<body>
+  <div id="base" class="">
+
+    <!-- Title (Rectangle) -->
+    <div id="u4" class="ax_default label" data-label="Title">
+      <div id="u4_div" class=""></div>
+      <div id="u4_text" class="text ">
+        <p>
+          <span>Automatic Watering Management</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Unnamed (Rectangle) -->
+    <div id="u5" class="ax_default label">
+      <div id="u5_div" class=""></div>
+      <div id="u5_text" class="text ">
+        <p>
+          <span>Temperature Condition</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Unnamed (Rectangle) -->
+    <div id="u6" class="ax_default label">
+      <div id="u6_div" class=""></div>
+      <div id="u6_text" class="text ">
+        <p>
+          <span>Humidity Condition</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Unnamed (Rectangle) -->
+    <div id="u7" class="ax_default label">
+      <div id="u7_div" class=""></div>
+      <div id="u7_text" class="text ">
+        <p>
+          <span>Last Temperature</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Unnamed (Rectangle) -->
+    <div id="u8" class="ax_default label">
+      <div id="u8_div" class=""></div>
+      <div id="u8_text" class="text ">
+        <p>
+          <span>Last Humidity</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Unnamed (Rectangle) -->
+    <div id="u9" class="ax_default label">
+      <div id="u9_div" class=""></div>
+      <div id="u9_text" class="text ">
+        <p>
+          <span>Bump Status</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- On Buttom (Rectangle) -->
+    <div id="u10" class="ax_default shape selected" data-label="On Buttom" onclick="updateMode('on')">
+      <div id="u10_div" class="selected"></div>
+      <div id="u10_text" class="text ">
+        <p>
+          <span>ON</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Off Buttom (Rectangle) -->
+    <div id="u11" class="ax_default shape selected" data-label="Off Buttom" onclick="updateMode('off')">
+      <div id="u11_div" class="selected"></div>
+      <div id="u11_text" class="text ">
+        <p>
+          <span>OFF</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Auto Buttom (Rectangle) -->
+    <div id="u12" class="ax_default shape" data-label="Auto Buttom">
+      <div id="u12_div" class=""></div>
+      <div id="u12_text" class="text ">
+        <p>
+          <span>AUTO</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- View Logs (Rectangle) -->
+    <div id="u13" class="ax_default paragraph1" data-label="View Logs" onclick="view()">
+      <div id="u13_div" class=""></div>
+      <div id="u13_text" class="text ">
+        <p>
+          <span>View Logs</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Change condition (Rectangle) -->
+    <div id="u14" class="ax_default shape" data-label="Change condition" onclick="changeCondition()">
+      <div id="u14_div" class=""></div>
+      <div id="u14_text" class="text ">
+        <p>
+          <span>Change&nbsp; Condition</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Data_Tem_condition (Text Field) -->
+    <div id="u15" class="ax_default text_field" data-label="Data_Tem_condition" title="Get form data">
+      <input id="u15_input" type="number" value="" title="Get form data" readonly/>
+    </div>
+
+    <!-- Data_Hum_condition (Text Field) -->
+    <div id="u16" class="ax_default text_field" data-label="Data_Hum_condition" title="Get form data">
+      <input id="u16_input" type="number" value="" title="Get form data" readonly/>
+    </div>
+
+    <!-- Data_lastTem (Text Field) -->
+    <div id="u17" class="ax_default text_field" data-label="Data_lastTem" title="Get form data">
+      <input id="u17_input" type="number" value="" title="Get form data" readonly/>
+    </div>
+
+    <!-- Data_lastHum (Text Field) -->
+    <div id="u18" class="ax_default text_field" data-label="Data_lastHum">
+      <input id="u18_input" type="number" value="" readonly/>
+    </div>
+
+    <!-- Data_currentMode (Text Field) -->
+    <div id="u19" class="ax_default text_field" data-label="Data_currentMode" title="Get form data">
+      <input id="u19_input" type="text" value="OFF" title="Get form data" readonly/>
+    </div>
+
+    <!-- Unnamed (Rectangle) -->
+    <div id="u20" class="ax_default paragraph1">
+      <div id="u20_div" class=""></div>
+      <div id="u20_text" class="text ">
+        <p>
+          <span>Back</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Unnamed (Rectangle) -->
+    <div id="u21" class="ax_default label">
+      <div id="u21_div" class=""></div>
+      <div id="u21_text" class="text ">
+        <p>
+          <span>UID</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- UID_data_field (Text Field) -->
+    <div id="u22" class="ax_default text_field" data-label="UID_data_field">
+      <input id="u22_input" type="text" value="" readonly/>
+    </div>
+  </div>
+</body>
+
+</html>

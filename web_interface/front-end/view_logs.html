@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Page 2</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link href="resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet" />
+    <link href="resources/css/axure_rp_page.css" type="text/css" rel="stylesheet" />
+    <link href="data/styles.css" type="text/css" rel="stylesheet" />
+    <link href="files/page_2/styles.css" type="text/css" rel="stylesheet" />
+    <script src="resources/scripts/jquery-1.7.1.min.js"></script>
+    <script src="resources/scripts/jquery-ui-1.8.10.custom.min.js"></script>
+    <script src="resources/scripts/prototypePre.js"></script>
+    <script src="data/document.js"></script>
+    <script src="resources/scripts/prototypePost.js"></script>
+    <script src="files/page_2/data.js"></script>
+    <script type="text/javascript">
+        $axure.utils.getTransparentGifPath = function () { return 'resources/images/transparent.gif'; };
+        $axure.utils.getOtherPath = function () { return 'resources/Other.html'; };
+        $axure.utils.getReloadPath = function () { return 'resources/reload.html'; };
+    </script>
+    <script>
+        
+        function getServerTime() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const myParam = urlParams.get("uid");
+
+            var request = new XMLHttpRequest();
+            var url = "./php/mcu_all_data.php?uid=" + myParam;
+            request.open("GET", url, true);
+            request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            request.onreadystatechange = function () {
+                if (request.readyState == 4 && request.status == 200) {
+                    // alert(request.responseText=="\n");
+                    if (request.responseText == "\n") {
+                        alert("it has no data");
+                    }
+
+                    showTime(request.responseText);
+                }
+            }
+            request.send();
+        }
+        //dung de xu ly data 
+        // Mode-1 (Table Cell) -->
+        //   <div id="u39" class="ax_default table_cell" data-label="Mode-1">
+        //     <img id="u39_img" class="img " src="images/page_2/mode-1_u39.png" />
+        //   </div>
+        function showTime(response) {
+            var data = JSON.parse(response);
+            var id_increase = 36;
+            data.forEach(element => {
+                var t = id_increase;
+                var para = document.createElement("div");
+                para.setAttribute("id", "u" + t);
+                para.setAttribute("class", "ax_default table_cell");
+                var myDate = new Date(element.timestamp);
+                para.textContent = myDate.getHours().toString()+":"+myDate.getMinutes().toString();
+                document.getElementById("u31").appendChild(para);
+                var para1 = document.createElement("div");
+                t++;
+                para1.setAttribute("id", "u" + t);
+                para1.setAttribute("class", "ax_default table_cell");
+                para1.textContent = element.temporary;
+                document.getElementById("u31").appendChild(para1);
+                var para2 = document.createElement("div");
+                t++;
+                para2.setAttribute("id", "u" + t);
+                para2.setAttribute("class", "ax_default table_cell");
+                para2.textContent = element.humidity;
+                document.getElementById("u31").appendChild(para2);
+
+                id_increase += 4;
+            });
+
+        }
+        setTimeout(function () {
+            window.location.reload(1);
+        }, 15000);
+        window.onload = getServerTime();
+  // alert(window.location);
+    </script>
+</head>
+
+<body>
+    <div id="base" class="">
+
+        <!-- Unnamed (Table) -->
+        <div id="u31" class="ax_default">
+
+            <!-- Date-0 (Table Cell) -->
+            <div id="u32" class="ax_default table_cell" data-label="Date-0">
+                <img id="u32_img" class="img " src="images/page_2/date-0_u32.png" />
+                <div id="u32_text" class="text ">
+                    <p>
+                        <span>Date/Time</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tem-0 (Table Cell) -->
+            <div id="u33" class="ax_default table_cell" data-label="Tem-0">
+                <img id="u33_img" class="img " src="images/page_2/date-0_u32.png" />
+                <div id="u33_text" class="text ">
+                    <p>
+                        <span>Temparature</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Hum-0 (Table Cell) -->
+            <div id="u34" class="ax_default table_cell" data-label="Hum-0">
+                <img id="u34_img" class="img " src="images/page_2/date-0_u32.png" />
+                <div id="u34_text" class="text ">
+                    <p>
+                        <span>Humidity</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Clear log (Rectangle) -->
+        <div id="u80" class="ax_default shape" data-label="Clear log">
+            <div id="u80_div" class=""></div>
+            <div id="u80_text" class="text ">
+                <p>
+                    <span>Clear log</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Back (Rectangle) -->
+        <div id="u81" class="ax_default shape" data-label="Back">
+            <div id="u81_div" class=""></div>
+            <div id="u81_text" class="text ">
+                <p>
+                    <span>CLOSE</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

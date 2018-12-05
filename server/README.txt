@@ -6,4 +6,4 @@ and we can use immediately those apis:
 -Change the condition for mcu: https://iot-assignment.herokuapp.com/updatemcu/123?temporary=40&humidity=50
 -Get the condition of mcu: https://iot-assignment.herokuapp.com/mcu/123
 -Get latest data of mcu that it send to server: https://iot-assignment.herokuapp.com/getone?mcu=123 (if not have any data, so the data may be deleted, you can create data manually by the first api)
--Get all data of mcu that it send to server: https://iot-assignment.herokuapp.com/getall?mcu=123
+-Get all data of mcu that it send to server: https://iot-assignment.herokuapp.com/getall?mcu=123 (it will limit 10 latest data)
